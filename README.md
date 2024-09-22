@@ -5,9 +5,7 @@
 ### 示例链接
 ```https://so.eastmoney.com/news/s?keyword=绿色金融&sort=score&type=content```
 
-有关文件为spider中的```news.py```文件
+有关文件为```Spider_and_Data_Process\Spider\eastmoney```中的scrapy爬虫框架
 
-## 华为应用市场APP评论内容爬取
-华为应用市场网页版用户评论爬取，可爬取评分，评论内容等信息。
-
-相关文件为spider中的```comments.py```文件
+### LDA建模和关键词可视化等简单的数据分析
+Spider_and_Data_Process文件夹下的其他文件

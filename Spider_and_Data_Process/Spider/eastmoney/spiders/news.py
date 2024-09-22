@@ -26,7 +26,6 @@ class NewsSpider(scrapy.Spider):
         self.keywords = '数字普惠金融'
         # options = Options()
         # options.add_argument('--headless')  # 无头模式
-        # options.add_argument('--disable-gpu')  # 禁用GPU加速
         # options.add_argument('--blink-settings=imagesEnabled=false')  # 禁止加载图片
         # self.option = options
 
@@ -36,7 +35,6 @@ class NewsSpider(scrapy.Spider):
         url = f'https://so.eastmoney.com/news/s?keyword={keywords}&sort=score&type={type}'
         # chrome_options = Options()
         # chrome_options.add_argument('--headless')
-        # chrome_options.add_argument('--disable-gpu')
         # chrome_options.add_argument('--blink-settings=imagesEnabled=false')
         yield Request(url=url, callback=self.parse)
 
@@ -50,7 +48,6 @@ class NewsSpider(scrapy.Spider):
                 str1 = '下一页'
                 ele = bro.find_element('xpath', f'//*[@id="app"]/div[3]/div[1]/div[4]/div/a[@title=\"{str1}\"]')
                 ele.click()
-
                 # news_list = #app > div.main.container > div.c_l > div.news_list > div:nth-child(1)
                 time.sleep(0.2)
                 page_text = bro.page_source
@@ -68,18 +65,14 @@ class NewsSpider(scrapy.Spider):
         # # print(page_text)
 
     def Fullnews(self, response: HtmlResponse, **kwargs):
-
         total_news = News()
         Sel = Selector(response)
         total_news['url'] = response.url
         total_news['title'] = Sel.css('#topbox > div.title::text').extract_first()
-
         total_news['body'] = '\n'.join(response.xpath("//div[@id='ContentBody']//p").xpath(
             'string(.)').extract()).strip()  # //*[@id="ContentBody"]/p[3]
         total_news['publish_time'] = Sel.css('#topbox > div.tipbox > div.infos > div:nth-child(1)::text').extract_first()
-
         total_news['source'] = Sel.css('#topbox > div.tipbox > div.infos > div:nth-child(2)::text').extract_first()
-
         print(total_news['body'])
         yield total_news
 
